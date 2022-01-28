@@ -1,0 +1,53 @@
+Werewolves and Wanderers
+<ROOM>0
+    <NAME>Start Room
+    <DESC>This is a non descript room.
+    <DESC>You feel a slight breeze coming from the north.
+    <NORTH>1
+    <WEST>2
+    <TYPE>NORMAL
+<ENDROOM>
+<ROOM>1
+    <NAME>Kitchen
+    <DESC>This is the kitchen, the smell of rotting food assaults your senses.
+    <SOUTH>0
+    <TYPE>NORMAL
+<ENDROOM>
+<ROOM>2
+    <NAME>Armory
+    <DESC>This is the armory.  You see broken armor and rusted weapons everywhere.
+    <EAST>0
+    <TYPE>SHOP
+<ENDROOM>
+<ITEM>
+    <NAME>rock
+    <DESC>A small, roundish stone
+    <ROOM>0
+    <VALUE>1
+<ENDITEM>
+<ITEM>
+    <NAME>sword
+    <DESC>A jewel encrusted sword
+    <VALUE>400
+    <DAMAGE>10
+    <ROOM>player
+    <WEAPON>
+<ENDITEM>
+<ITEM>
+    <NAME>sack
+    <CONTAINER>
+    <VALUE>50
+    <ROOM>0
+    <DESC>A tattered cloth sack
+<ENDITEM>
+<ITEM>
+    <NAME>healing potion
+    <CONSUMABLE>
+    <HEAL>10
+    <VALUE>100
+    <ROOM>0
+    <INSIDE>sack
+    <DESC>A blue vial continaing a healing potion
+<ENDITEM>
+
+<ENDADV>
