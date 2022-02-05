@@ -1,6 +1,6 @@
-from player import player
+from player import Player
 
-class gameItem:
+class GameItem:
     def __init__(self, name, description, value):
         self.name = name
         self.description = description
@@ -13,24 +13,24 @@ class gameItem:
         else:
             print ("A "+self.name)
     
-class consumable(gameItem):
+class Consumable(GameItem):
     def __init__(self, name, description, value, heal = 0):
-        gameItem.__init__(self,name, description, value)
+        GameItem.__init__(self,name, description, value)
         self.heal = heal
         self.item_type = "consumable"
         
     def consume(self, player):
         player.hit_points += self.heal
         
-class weapon(gameItem):
+class Weapon(GameItem):
     def __init__(self, name, description, value, damage):
-        gameItem.__init__(self,name, description, value)
+        GameItem.__init__(self,name, description, value)
         self.damage = damage
         self.item_type = "weapon"
         
-class container(gameItem):
+class Container(GameItem):
     def __init__(self, name, description, value):
-        gameItem.__init__(self,name, description, value)
+        GameItem.__init__(self,name, description, value)
         self.items = []
         self.item_type = "container"
     

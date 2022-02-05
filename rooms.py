@@ -1,6 +1,7 @@
 #from gameitems import item
+import clear_screen
 
-class room:
+class Room:
     TYPE_NORMAL = 0
     TYPE_SHOP = 1
     
@@ -11,7 +12,6 @@ class room:
         self.room_type = room_type
         self.entered = False
         self.itemList = []
-        self.entered = False
         self.exits = {'north':None, 'south':None, 'east':None, 'west':None}
 
     def set_exit(self,door, location):

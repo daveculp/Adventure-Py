@@ -1,43 +1,44 @@
-from rooms import room
+from rooms import Room
 from random import randint
-from player import player
+from player import Player
 from Gameitems import *
 from time import sleep
 import sys
+import clear_screen
 
 #verbs = ['get', 'take', 'open','go', 'run', 'move', 'look', 'attack','kill', 'examine', 'eat', 'drink', 'shout']
 
-bad_parse_msgs = [
-	"I have no idea what you are saying!",
-	"What???",
-	"Speak up, I can't hear you!",
-	"I dont understand.",
-	"???????",
-	"Um.......yeah.....no."
-	]
+
 	
-class adventure:
-	
+class Adventure:
+	bad_parse_msgs = [
+		"I have no idea what you are saying!",
+		"What???",
+		"Speak up, I can't hear you!",
+		"I dont understand.",
+		"???????",
+		"Um.......yeah.....no."
+		]
 	def __init__(self, filename):
 		self.rooms = []
 		self.title = ""
 		player_name = input ("What is your name adventurer? ")
-		self.player = player(player_name)
+		self.player = Player(player_name)
 		self.load_adv(filename)
 		self.do_title()
 		self.current_room = self.rooms[self.player.location]
 
 	def do_title(self):
-
-		for x in range(30):
-			print("\n")
+		clear_screen.clear()
 		print ("Welcome "+self.player.name+" to")
 		print ("="*len(self.title)+"====")
 		print ("= "+self.title+" =")
 		print ("="*len(self.title)+"====")
+		sleep(2)
 		
 	def load_adv(self, filename):
 		print("Loading datafile....")
+		sleep(2)
 		f = open(filename, "r")
 		self.title = f.readline().strip()
 		print (self.title)
@@ -59,7 +60,7 @@ class adventure:
 	
 	def load_room(self, room_num,f):
 		north = south = east = west = None
-		room_type = room.TYPE_NORMAL
+		room_type = Room.TYPE_NORMAL
 		desc = ""
 		while True:
 			line = f.readline().strip()
@@ -86,8 +87,8 @@ class adventure:
 				west = int(data)
 			elif tag == "TYPE":
 				if data == "SHOP":
-					room_type = room.TYPE_SHOP
-		new_room = room(name, desc, room_type)
+					room_type = Room.TYPE_SHOP
+		new_room = Room(name, desc, room_type)
 		new_room.set_exits(north,south,east,west)  
 		self.rooms.append(new_room)
 	
@@ -122,13 +123,13 @@ class adventure:
 				item_type = tag
 		
 		if item_type == "NORMAL":
-			new_item = gameItem(name, desc, value)
+			new_item = GameItem(name, desc, value)
 		elif item_type == "WEAPON":
-			new_item = weapon(name, desc, value, damage)
+			new_item = Weapon(name, desc, value, damage)
 		elif item_type == "CONSUMABLE":
-			new_item = consumable(name, desc, value, heal)
+			new_item = Consumable(name, desc, value, heal)
 		elif item_type == "CONTAINER":
-			new_item = container(name, desc, value)
+			new_item = Container(name, desc, value)
 		#new_item.print_item()
 		if inside != None:
 			print ("placing item inside another item!")
@@ -147,13 +148,6 @@ class adventure:
 
 	def execute_command(self, commands):
 		#single letter commands
-		"""
-		try:
-			self.verbs[commands[0]]()
-		except KeyError:
-			print ("Inside KeyError")
-			print( bad_parse_msgs[randint(0, len(bad_parse_msgs)-1)])
-		"""
 		if len(commands) == 1:
 			command = commands[0].lower()
 			if command.lower() =="n" or command.lower() == "north":
@@ -168,10 +162,12 @@ class adventure:
 				sys.exit()
 			elif command.lower() == "i" or command.lower() == "inventory":
 				self.player.print_inventory()
-			elif command.lower() == "l" or command.lower() == "look":
+			elif command.lower() == "l" or command.lower() == "?" or command.lower() == "look":
 				game.rooms[game.player.location].print_room()
+			elif command.lower() == "c" or command.lower == "char":
+				self.player.print_player()
 			else:
-				print( bad_parse_msgs[randint(0, len(bad_parse_msgs)-1)])
+				print( Adventure.bad_parse_msgs[randint(0, len(Adventure.bad_parse_msgs)-1)])
 			return
 		
 		#movement commands
@@ -215,7 +211,7 @@ class adventure:
 						for inside_item in item.items:
 							inside_item.print_item()
 			return
-	print( bad_parse_msgs[randint(0, len(bad_parse_msgs)-1)])
+	#print( bad_parse_msgs[randint(0, len(bad_parse_msgs)-1)])
 			
 		
 			
@@ -239,8 +235,9 @@ class adventure:
 				
 	def main(self):
 		while True:
-			game.player.print_player()
+			
 			if self.current_room.entered == False:
+				game.player.print_player()
 				self.current_room.print_room()
 			commands = self.get_command()
 			self.execute_command(commands)
@@ -258,11 +255,11 @@ class adventure:
 
 			
 			
-game = adventure("rooms.txt")
+game = Adventure("rooms.txt")
 game.main()
 
 
-#print("I have no idea what you are saying!")
+
 		
 		
 	
