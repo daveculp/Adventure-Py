@@ -11,7 +11,7 @@ class Room:
         self.desc = desc
         self.room_type = room_type
         self.entered = False
-        self.itemList = []
+        self.item_list = []
         self.exits = {'north':None, 'south':None, 'east':None, 'west':None}
 
     def set_exit(self,door, location):
@@ -39,9 +39,9 @@ class Room:
         if self.room_type == self.TYPE_SHOP:
             print ("This is a shop")
            
-        if len(self.itemList) > 0:
+        if len(self.item_list) > 0:
             print ("You see the following in the room:")
-            for item in self.itemList:
+            for item in self.item_list:
                 item.print_item()
         for key, value in self.exits.items():
             if value != None:

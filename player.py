@@ -9,9 +9,12 @@ class Player:
         self.hit_points = 20
     
     def print_inventory(self):
-        print ("You are carrying the following items:")
-        for item in self.inventory:
-            item.print_item()
+        if len(self.inventory) > 0:
+            print ("You are carrying the following items:")
+            for item in self.inventory:
+                item.print_item()
+        else:
+            print("You are carrying nothing of interest.")
 
     def print_player(self):
         print ("\nName: "+self.name)

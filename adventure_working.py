@@ -133,14 +133,14 @@ class Adventure:
 		#new_item.print_item()
 		if inside != None:
 			print ("placing item inside another item!")
-			for item in self.rooms[room_num].itemList:
+			for item in self.rooms[room_num].item_list:
 				if item.name == inside:
 					item.items.append(new_item)
 					print (item)
 		elif room_num == "player":
 			self.player.add_item(new_item)
 		else:
-			self.rooms[room_num].itemList.append(new_item)
+			self.rooms[room_num].item_list.append(new_item)
 			
 	def get_command(self):
 		command = input(">>>").rstrip().lower()
@@ -186,14 +186,25 @@ class Adventure:
 		#get and take item commands
 		if commands[0] in ['get','take']:
 			found = False
-			for item in self.rooms[self.player.location].itemList:
+			for item in self.rooms[self.player.location].item_list:
 				if commands[1] == item.name:
 					self.player.add_item(item)
-					self.rooms[self.player.location].itemList.remove(item)
+					self.rooms[self.player.location].item_list.remove(item)
 					found = True
 					print (commands[1]+" taken")
 			if not found:
 				print("I dont see a "+commands[1]+" here.")
+			return
+			
+		if commands[0] == "drop":
+			drop_item = commands[1]
+			for item in self.player.inventory:
+				if item.name == drop_item:
+					self.player.inventory.remove(item)
+					print(item.name+"droped")
+					self.rooms[self.player.location].item_list.append(item)
+					return
+			print("You are not carrying that item!")
 			return
 		
 		#open items
@@ -211,7 +222,7 @@ class Adventure:
 						for inside_item in item.items:
 							inside_item.print_item()
 			return
-	#print( bad_parse_msgs[randint(0, len(bad_parse_msgs)-1)])
+		print( Adventure.bad_parse_msgs[randint(0, len(Adventure.bad_parse_msgs)-1)])
 			
 		
 			
