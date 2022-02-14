@@ -1,4 +1,4 @@
-from rooms import Room
+from room import Room
 from random import randint
 from player import Player
 from Gameitems import *
@@ -34,14 +34,13 @@ class Adventure:
 		print ("="*len(self.title)+"====")
 		print ("= "+self.title+" =")
 		print ("="*len(self.title)+"====")
-		sleep(2)
 		
 	def load_adv(self, filename):
 		print("Loading datafile....")
-		sleep(2)
+		sleep(1)
 		f = open(filename, "r")
 		self.title = f.readline().strip()
-		print (self.title)
+		#print (self.title)
 		while True:
 			
 			line = f.readline().strip()
@@ -117,7 +116,7 @@ class Adventure:
 			elif tag == "VALUE":
 				value = int(data)
 			elif tag == "INSIDE":
-				print ("inside"+data)
+				#print ("inside"+data)
 				inside = data
 			elif tag == "CONSUMABLE" or tag == "WEAPON" or tag == "CONTAINER":
 				item_type = tag
@@ -132,18 +131,19 @@ class Adventure:
 			new_item = Container(name, desc, value)
 		#new_item.print_item()
 		if inside != None:
-			print ("placing item inside another item!")
+			#print ("placing item inside another item!")
 			for item in self.rooms[room_num].item_list:
 				if item.name == inside:
 					item.items.append(new_item)
-					print (item)
+					#print (item)
 		elif room_num == "player":
 			self.player.add_item(new_item)
 		else:
 			self.rooms[room_num].item_list.append(new_item)
 			
 	def get_command(self):
-		command = input(">>>").rstrip().lower()
+		command_str = str(self.player.hit_points) +" hit points:>>>"
+		command = input(command_str).rstrip().lower()
 		return command.split()
 
 	def execute_command(self, commands):
@@ -201,7 +201,7 @@ class Adventure:
 			for item in self.player.inventory:
 				if item.name == drop_item:
 					self.player.inventory.remove(item)
-					print(item.name+"droped")
+					print(item.name+" droped")
 					self.rooms[self.player.location].item_list.append(item)
 					return
 			print("You are not carrying that item!")

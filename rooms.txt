@@ -1,7 +1,7 @@
 Werewolves and Wanderers
 <ROOM>0
     <NAME>Start Room
-    <DESC>This is a non descript room.
+    <DESC>This is a non-descript room.
     <DESC>You feel a slight breeze coming from the north.
     <NORTH>1
     <WEST>2
